@@ -1,0 +1,53 @@
+
+
+CREATE TABLE Customers (
+  ID SERIAL PRIMARY KEY,
+  Name VARCHAR(255) NOT NULL,
+  Address VARCHAR(255) NOT NULL,
+  Phone VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE Orders (
+  ID SERIAL PRIMARY KEY,
+  ID_Customer INTEGER REFERENCES Customers(ID),
+  Date DATE NOT NULL,
+  Status VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Products_Services (
+  ID SERIAL PRIMARY KEY,
+  Name VARCHAR(255) NOT NULL,
+  Price DECIMAL(10, 2) NOT NULL
+);
+
+CREATE TABLE Order_Items (
+  ID SERIAL PRIMARY KEY,
+  ID_Order INTEGER REFERENCES Orders(ID),
+  ID_Product_Service INTEGER REFERENCES Products_Services(ID),
+  Quantity INTEGER NOT NULL
+);
+
+CREATE TABLE Performers (
+  ID SERIAL PRIMARY KEY,
+  Name VARCHAR(255) NOT NULL,
+  Position VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Order_Performers (
+  ID SERIAL PRIMARY KEY,
+  ID_Order INTEGER REFERENCES Orders(ID),
+  ID_Performer INTEGER REFERENCES Performers(ID)
+);
+
+CREATE TABLE Categories (
+  ID SERIAL PRIMARY KEY,
+  Name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Product_Service_Categories (
+  ID SERIAL PRIMARY KEY,
+  ID_Product_Service INTEGER REFERENCES Products_Services(ID),
+  ID_Category INTEGER REFERENCES Categories(ID)
+);
+
+DROP TABLE Customers, Orders, Products_Services, Order_Items, Performers, Order_Performers, Categories, Product_Service_Categories;

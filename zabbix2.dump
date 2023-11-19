@@ -1,0 +1,617 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 14.9 (Ubuntu 14.9-0ubuntu0.22.04.1)
+-- Dumped by pg_dump version 14.9 (Ubuntu 14.9-0ubuntu0.22.04.1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: hub_category; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.hub_category (
+    hca_id integer NOT NULL,
+    category_id integer,
+    loaddatetime timestamp without time zone,
+    rec_source character varying(255)
+);
+
+
+ALTER TABLE public.hub_category OWNER TO postgres;
+
+--
+-- Name: hub_category_hca_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.hub_category_hca_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.hub_category_hca_id_seq OWNER TO postgres;
+
+--
+-- Name: hub_category_hca_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.hub_category_hca_id_seq OWNED BY public.hub_category.hca_id;
+
+
+--
+-- Name: hub_order_customer; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.hub_order_customer (
+    hoc_id integer NOT NULL,
+    customer_id integer,
+    loaddatetime timestamp without time zone,
+    rec_source character varying(255)
+);
+
+
+ALTER TABLE public.hub_order_customer OWNER TO postgres;
+
+--
+-- Name: hub_order_customer_hoc_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.hub_order_customer_hoc_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.hub_order_customer_hoc_id_seq OWNER TO postgres;
+
+--
+-- Name: hub_order_customer_hoc_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.hub_order_customer_hoc_id_seq OWNED BY public.hub_order_customer.hoc_id;
+
+
+--
+-- Name: hub_order_item; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.hub_order_item (
+    hoi_id integer NOT NULL,
+    item_id integer,
+    loaddatetime timestamp without time zone,
+    rec_source character varying(255)
+);
+
+
+ALTER TABLE public.hub_order_item OWNER TO postgres;
+
+--
+-- Name: hub_order_item_hoi_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.hub_order_item_hoi_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.hub_order_item_hoi_id_seq OWNER TO postgres;
+
+--
+-- Name: hub_order_item_hoi_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.hub_order_item_hoi_id_seq OWNED BY public.hub_order_item.hoi_id;
+
+
+--
+-- Name: hub_performer; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.hub_performer (
+    hpf_id integer NOT NULL,
+    performer_id integer,
+    loaddatetime timestamp without time zone,
+    rec_source character varying(255)
+);
+
+
+ALTER TABLE public.hub_performer OWNER TO postgres;
+
+--
+-- Name: hub_performer_hpf_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.hub_performer_hpf_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.hub_performer_hpf_id_seq OWNER TO postgres;
+
+--
+-- Name: hub_performer_hpf_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.hub_performer_hpf_id_seq OWNED BY public.hub_performer.hpf_id;
+
+
+--
+-- Name: link_order_customer; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.link_order_customer (
+    loc_id integer NOT NULL,
+    hoc_id integer,
+    loaddatetime timestamp without time zone,
+    startdatetime timestamp without time zone,
+    enddatetime timestamp without time zone
+);
+
+
+ALTER TABLE public.link_order_customer OWNER TO postgres;
+
+--
+-- Name: link_order_customer_loc_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.link_order_customer_loc_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.link_order_customer_loc_id_seq OWNER TO postgres;
+
+--
+-- Name: link_order_customer_loc_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.link_order_customer_loc_id_seq OWNED BY public.link_order_customer.loc_id;
+
+
+--
+-- Name: link_order_item; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.link_order_item (
+    loi_id integer NOT NULL,
+    hoc_id integer,
+    hoi_id integer,
+    loaddatetime timestamp without time zone,
+    startdatetime timestamp without time zone,
+    enddatetime timestamp without time zone
+);
+
+
+ALTER TABLE public.link_order_item OWNER TO postgres;
+
+--
+-- Name: link_order_item_category; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.link_order_item_category (
+    loic_id integer NOT NULL,
+    loi_id integer,
+    hca_id integer,
+    loaddatetime timestamp without time zone,
+    startdatetime timestamp without time zone,
+    enddatetime timestamp without time zone
+);
+
+
+ALTER TABLE public.link_order_item_category OWNER TO postgres;
+
+--
+-- Name: link_order_item_category_loic_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.link_order_item_category_loic_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.link_order_item_category_loic_id_seq OWNER TO postgres;
+
+--
+-- Name: link_order_item_category_loic_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.link_order_item_category_loic_id_seq OWNED BY public.link_order_item_category.loic_id;
+
+
+--
+-- Name: link_order_item_loi_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.link_order_item_loi_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.link_order_item_loi_id_seq OWNER TO postgres;
+
+--
+-- Name: link_order_item_loi_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.link_order_item_loi_id_seq OWNED BY public.link_order_item.loi_id;
+
+
+--
+-- Name: link_order_item_performer; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.link_order_item_performer (
+    loip_id integer NOT NULL,
+    loi_id integer,
+    hpf_id integer,
+    loaddatetime timestamp without time zone,
+    startdatetime timestamp without time zone,
+    enddatetime timestamp without time zone
+);
+
+
+ALTER TABLE public.link_order_item_performer OWNER TO postgres;
+
+--
+-- Name: link_order_item_performer_loip_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.link_order_item_performer_loip_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.link_order_item_performer_loip_id_seq OWNER TO postgres;
+
+--
+-- Name: link_order_item_performer_loip_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.link_order_item_performer_loip_id_seq OWNED BY public.link_order_item_performer.loip_id;
+
+
+--
+-- Name: hub_category hca_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.hub_category ALTER COLUMN hca_id SET DEFAULT nextval('public.hub_category_hca_id_seq'::regclass);
+
+
+--
+-- Name: hub_order_customer hoc_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.hub_order_customer ALTER COLUMN hoc_id SET DEFAULT nextval('public.hub_order_customer_hoc_id_seq'::regclass);
+
+
+--
+-- Name: hub_order_item hoi_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.hub_order_item ALTER COLUMN hoi_id SET DEFAULT nextval('public.hub_order_item_hoi_id_seq'::regclass);
+
+
+--
+-- Name: hub_performer hpf_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.hub_performer ALTER COLUMN hpf_id SET DEFAULT nextval('public.hub_performer_hpf_id_seq'::regclass);
+
+
+--
+-- Name: link_order_customer loc_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.link_order_customer ALTER COLUMN loc_id SET DEFAULT nextval('public.link_order_customer_loc_id_seq'::regclass);
+
+
+--
+-- Name: link_order_item loi_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.link_order_item ALTER COLUMN loi_id SET DEFAULT nextval('public.link_order_item_loi_id_seq'::regclass);
+
+
+--
+-- Name: link_order_item_category loic_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.link_order_item_category ALTER COLUMN loic_id SET DEFAULT nextval('public.link_order_item_category_loic_id_seq'::regclass);
+
+
+--
+-- Name: link_order_item_performer loip_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.link_order_item_performer ALTER COLUMN loip_id SET DEFAULT nextval('public.link_order_item_performer_loip_id_seq'::regclass);
+
+
+--
+-- Data for Name: hub_category; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.hub_category (hca_id, category_id, loaddatetime, rec_source) FROM stdin;
+\.
+
+
+--
+-- Data for Name: hub_order_customer; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.hub_order_customer (hoc_id, customer_id, loaddatetime, rec_source) FROM stdin;
+\.
+
+
+--
+-- Data for Name: hub_order_item; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.hub_order_item (hoi_id, item_id, loaddatetime, rec_source) FROM stdin;
+\.
+
+
+--
+-- Data for Name: hub_performer; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.hub_performer (hpf_id, performer_id, loaddatetime, rec_source) FROM stdin;
+\.
+
+
+--
+-- Data for Name: link_order_customer; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.link_order_customer (loc_id, hoc_id, loaddatetime, startdatetime, enddatetime) FROM stdin;
+\.
+
+
+--
+-- Data for Name: link_order_item; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.link_order_item (loi_id, hoc_id, hoi_id, loaddatetime, startdatetime, enddatetime) FROM stdin;
+\.
+
+
+--
+-- Data for Name: link_order_item_category; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.link_order_item_category (loic_id, loi_id, hca_id, loaddatetime, startdatetime, enddatetime) FROM stdin;
+\.
+
+
+--
+-- Data for Name: link_order_item_performer; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.link_order_item_performer (loip_id, loi_id, hpf_id, loaddatetime, startdatetime, enddatetime) FROM stdin;
+\.
+
+
+--
+-- Name: hub_category_hca_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.hub_category_hca_id_seq', 1, false);
+
+
+--
+-- Name: hub_order_customer_hoc_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.hub_order_customer_hoc_id_seq', 1, false);
+
+
+--
+-- Name: hub_order_item_hoi_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.hub_order_item_hoi_id_seq', 1, false);
+
+
+--
+-- Name: hub_performer_hpf_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.hub_performer_hpf_id_seq', 1, false);
+
+
+--
+-- Name: link_order_customer_loc_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.link_order_customer_loc_id_seq', 1, false);
+
+
+--
+-- Name: link_order_item_category_loic_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.link_order_item_category_loic_id_seq', 1, false);
+
+
+--
+-- Name: link_order_item_loi_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.link_order_item_loi_id_seq', 1, false);
+
+
+--
+-- Name: link_order_item_performer_loip_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.link_order_item_performer_loip_id_seq', 1, false);
+
+
+--
+-- Name: hub_category hub_category_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.hub_category
+    ADD CONSTRAINT hub_category_pkey PRIMARY KEY (hca_id);
+
+
+--
+-- Name: hub_order_customer hub_order_customer_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.hub_order_customer
+    ADD CONSTRAINT hub_order_customer_pkey PRIMARY KEY (hoc_id);
+
+
+--
+-- Name: hub_order_item hub_order_item_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.hub_order_item
+    ADD CONSTRAINT hub_order_item_pkey PRIMARY KEY (hoi_id);
+
+
+--
+-- Name: hub_performer hub_performer_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.hub_performer
+    ADD CONSTRAINT hub_performer_pkey PRIMARY KEY (hpf_id);
+
+
+--
+-- Name: link_order_customer link_order_customer_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.link_order_customer
+    ADD CONSTRAINT link_order_customer_pkey PRIMARY KEY (loc_id);
+
+
+--
+-- Name: link_order_item_category link_order_item_category_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.link_order_item_category
+    ADD CONSTRAINT link_order_item_category_pkey PRIMARY KEY (loic_id);
+
+
+--
+-- Name: link_order_item_performer link_order_item_performer_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.link_order_item_performer
+    ADD CONSTRAINT link_order_item_performer_pkey PRIMARY KEY (loip_id);
+
+
+--
+-- Name: link_order_item link_order_item_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.link_order_item
+    ADD CONSTRAINT link_order_item_pkey PRIMARY KEY (loi_id);
+
+
+--
+-- Name: link_order_customer link_order_customer_hoc_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.link_order_customer
+    ADD CONSTRAINT link_order_customer_hoc_id_fkey FOREIGN KEY (hoc_id) REFERENCES public.hub_order_customer(hoc_id);
+
+
+--
+-- Name: link_order_item_category link_order_item_category_hca_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.link_order_item_category
+    ADD CONSTRAINT link_order_item_category_hca_id_fkey FOREIGN KEY (hca_id) REFERENCES public.hub_category(hca_id);
+
+
+--
+-- Name: link_order_item_category link_order_item_category_loi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.link_order_item_category
+    ADD CONSTRAINT link_order_item_category_loi_id_fkey FOREIGN KEY (loi_id) REFERENCES public.link_order_item(loi_id);
+
+
+--
+-- Name: link_order_item link_order_item_hoc_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.link_order_item
+    ADD CONSTRAINT link_order_item_hoc_id_fkey FOREIGN KEY (hoc_id) REFERENCES public.hub_order_customer(hoc_id);
+
+
+--
+-- Name: link_order_item link_order_item_hoi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.link_order_item
+    ADD CONSTRAINT link_order_item_hoi_id_fkey FOREIGN KEY (hoi_id) REFERENCES public.hub_order_item(hoi_id);
+
+
+--
+-- Name: link_order_item_performer link_order_item_performer_hpf_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.link_order_item_performer
+    ADD CONSTRAINT link_order_item_performer_hpf_id_fkey FOREIGN KEY (hpf_id) REFERENCES public.hub_performer(hpf_id);
+
+
+--
+-- Name: link_order_item_performer link_order_item_performer_loi_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.link_order_item_performer
+    ADD CONSTRAINT link_order_item_performer_loi_id_fkey FOREIGN KEY (loi_id) REFERENCES public.link_order_item(loi_id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+

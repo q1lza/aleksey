@@ -1,0 +1,62 @@
+CREATE TABLE Hub_Order_Customer (
+    HOC_ID SERIAL PRIMARY KEY,
+    Customer_ID INT,
+    LoadDateTime TIMESTAMP,
+    Rec_Source VARCHAR(255)
+);
+
+CREATE TABLE Hub_Order_Item (
+    HOI_ID SERIAL PRIMARY KEY,
+    Item_ID INT,
+    LoadDateTime TIMESTAMP,
+    Rec_Source VARCHAR(255)
+);
+
+CREATE TABLE Hub_Performer (
+    HPF_ID SERIAL PRIMARY KEY,
+    Performer_ID INT,
+    LoadDateTime TIMESTAMP,
+    Rec_Source VARCHAR(255)
+);
+
+CREATE TABLE Hub_Category (
+    HCA_ID SERIAL PRIMARY KEY,
+    Category_ID INT,
+    LoadDateTime TIMESTAMP,
+    Rec_Source VARCHAR(255)
+);
+
+CREATE TABLE Link_Order_Customer (
+    LOC_ID SERIAL PRIMARY KEY,
+    HOC_ID INT REFERENCES Hub_Order_Customer (HOC_ID),
+    LoadDateTime TIMESTAMP,
+    StartDateTime TIMESTAMP,
+    EndDateTime TIMESTAMP
+);
+
+CREATE TABLE Link_Order_Item (
+    LOI_ID SERIAL PRIMARY KEY,
+    HOC_ID INT REFERENCES Hub_Order_Customer (HOC_ID),
+    HOI_ID INT REFERENCES Hub_Order_Item (HOI_ID),
+    LoadDateTime TIMESTAMP,
+    StartDateTime TIMESTAMP,
+    EndDateTime TIMESTAMP
+);
+
+CREATE TABLE Link_Order_Item_Performer (
+    LOIP_ID SERIAL PRIMARY KEY,
+    LOI_ID INT REFERENCES Link_Order_Item (LOI_ID),
+    HPF_ID INT REFERENCES Hub_Performer (HPF_ID),
+    LoadDateTime TIMESTAMP,
+    StartDateTime TIMESTAMP,
+    EndDateTime TIMESTAMP
+);
+
+CREATE TABLE Link_Order_Item_Category (
+    LOIC_ID SERIAL PRIMARY KEY,
+    LOI_ID INT REFERENCES Link_Order_Item (LOI_ID),
+    HCA_ID INT REFERENCES Hub_Category (HCA_ID),
+    LoadDateTime TIMESTAMP,
+    StartDateTime TIMESTAMP,
+    EndDateTime TIMESTAMP
+);
